@@ -2,6 +2,7 @@ import { useRef, type ReactNode, type RefObject } from 'react'
 import { motion, useDragControls } from 'framer-motion'
 import { Minus, Square, X, Copy } from 'lucide-react'
 import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { useViewport } from '@/hooks/useViewport'
 import { useWindows, type WinState } from '@/hooks/useWindowManager'
 import { WINDOWS } from '@/lib/windowMeta'
 
@@ -19,6 +20,7 @@ export function Window({ win, bounds, children }: WindowProps) {
   const isMobile = useIsMobile()
   const reduced = useReducedMotion()
   const dragControls = useDragControls()
+  const viewport = useViewport()
   const ref = useRef<HTMLDivElement>(null)
 
   const meta = WINDOWS[win.id]
@@ -53,8 +55,9 @@ export function Window({ win, bounds, children }: WindowProps) {
     )
   }
 
+  // Both branches are plain numbers — Motion can't tween a number into a calc().
   const geometry = win.maximized
-    ? { x: 12, y: 12, width: `calc(100vw - 24px)`, height: `calc(100vh - ${DOCK_H + 24}px)` }
+    ? { x: 12, y: 12, width: viewport.w - 24, height: viewport.h - DOCK_H - 24 }
     : { x: win.x, y: win.y, width: win.w, height: win.h }
 
   return (
