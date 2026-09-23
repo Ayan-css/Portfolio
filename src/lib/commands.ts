@@ -100,10 +100,7 @@ export function buildCommands({ open, closeAll }: Deps): Command[] {
       hint: 'replay the boot sequence',
       group: 'System',
       keywords: 'restart boot reload',
-      run: () => {
-        sessionStorage.removeItem('ayanos:booted')
-        window.location.reload()
-      },
+      run: () => window.location.reload(),
     },
     {
       id: 'sys:coffee',

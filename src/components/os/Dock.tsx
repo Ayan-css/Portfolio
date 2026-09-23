@@ -2,7 +2,7 @@ import { Clock, FolderOpen, Package, Terminal, User, type LucideIcon } from 'luc
 import { motion } from 'framer-motion'
 import { useWindows } from '@/hooks/useWindowManager'
 import { DOCK_ITEMS, WINDOWS, type WindowId } from '@/lib/windowMeta'
-import { useIsMobile } from '@/hooks/useMediaQuery'
+import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
 import { useClock } from '@/hooks/useClock'
 
 const ICONS: Partial<Record<WindowId, LucideIcon>> = {
@@ -17,6 +17,7 @@ export function Dock({ onOpenPalette }: { onOpenPalette: () => void }) {
   const { windows, open, focus, minimize, topId } = useWindows()
   const isMobile = useIsMobile()
   const time = useClock()
+  const reduced = useReducedMotion()
 
   const activate = (id: WindowId) => {
     const win = windows.find((w) => w.id === id)
@@ -32,7 +33,12 @@ export function Dock({ onOpenPalette }: { onOpenPalette: () => void }) {
       className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center pb-3"
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="border-os-line bg-os-surface/95 pointer-events-auto flex items-center gap-1 rounded-xl border px-2 py-2 shadow-2xl shadow-black/60 backdrop-blur-sm">
+      <motion.div
+        initial={reduced ? false : { y: 26, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: reduced ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] }}
+        className="border-os-line bg-os-surface/95 pointer-events-auto flex items-center gap-1 rounded-xl border px-2 py-2 shadow-2xl shadow-black/60 backdrop-blur-sm"
+      >
         {DOCK_ITEMS.map((id) => {
           const Icon = ICONS[id] ?? Package
           const win = windows.find((w) => w.id === id)
@@ -79,7 +85,7 @@ export function Dock({ onOpenPalette }: { onOpenPalette: () => void }) {
             </motion.time>
           </>
         )}
-      </div>
+      </motion.div>
     </nav>
   )
 }

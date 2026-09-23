@@ -9,25 +9,22 @@ import { Desktop } from '@/components/os/Desktop'
 import { CommandPalette } from '@/components/os/CommandPalette'
 import { ContextMenu } from '@/components/os/ContextMenu'
 
-const BOOTED_KEY = 'ayanos:booted'
-
 export default function App() {
-  // Boot once per browser session — re-watching it on every refresh gets old fast.
-  const [booting, setBooting] = useState(
-    () => typeof window !== 'undefined' && sessionStorage.getItem(BOOTED_KEY) === null,
-  )
+  // Boots on every load. It's ~2s and any key or click skips it.
+  const [booting, setBooting] = useState(true)
 
-  const finishBoot = () => {
-    sessionStorage.setItem(BOOTED_KEY, '1')
-    setBooting(false)
-  }
+  const finishBoot = () => setBooting(false)
 
   return (
     <WindowManagerProvider>
       <AnimatePresence>{booting && <BootSequence onDone={finishBoot} />}</AnimatePresence>
-      <SkillFilterProvider>
-        <Shell />
-      </SkillFilterProvider>
+      {/* Mounted only once boot is done, so the desktop gets a real entrance
+          instead of being revealed already in place behind the overlay. */}
+      {!booting && (
+        <SkillFilterProvider>
+          <Shell />
+        </SkillFilterProvider>
+      )}
     </WindowManagerProvider>
   )
 }

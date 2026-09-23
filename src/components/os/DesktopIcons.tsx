@@ -1,5 +1,7 @@
 import { FileText, FolderOpen, Package, Terminal, type LucideIcon } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { useWindows } from '@/hooks/useWindowManager'
+import { useReducedMotion } from '@/hooks/useMediaQuery'
 import type { WindowId } from '@/lib/windowMeta'
 
 const ICONS: { id: WindowId; label: string; Icon: LucideIcon; accent?: boolean }[] = [
@@ -12,11 +14,17 @@ const ICONS: { id: WindowId; label: string; Icon: LucideIcon; accent?: boolean }
 /** Desktop shortcuts. Single click opens — this is a portfolio, not a file manager exam. */
 export function DesktopIcons() {
   const { open } = useWindows()
+  const reduced = useReducedMotion()
 
   return (
     <ul className="absolute top-6 left-6 z-0 flex w-20 flex-col gap-1">
-      {ICONS.map(({ id, label, Icon, accent }) => (
-        <li key={id}>
+      {ICONS.map(({ id, label, Icon, accent }, index) => (
+        <motion.li
+          key={id}
+          initial={reduced ? false : { opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: index * 0.06, duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+        >
           <button
             type="button"
             onClick={() => open(id)}
@@ -31,7 +39,7 @@ export function DesktopIcons() {
               {label}
             </span>
           </button>
-        </li>
+        </motion.li>
       ))}
     </ul>
   )

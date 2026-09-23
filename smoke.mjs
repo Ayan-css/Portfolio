@@ -24,16 +24,30 @@ const check = (name, fn) => {
 
 try {
   const { default: App } = await vite.ssrLoadModule('/src/App.tsx')
+  const { Desktop } = await vite.ssrLoadModule('/src/components/os/Desktop.tsx')
   const { WindowManagerProvider } = await vite.ssrLoadModule('/src/hooks/useWindowManager.tsx')
   const { SkillFilterProvider } = await vite.ssrLoadModule('/src/hooks/useSkillFilter.tsx')
   const { WINDOW_CONTENT } = await vite.ssrLoadModule('/src/components/os/registry.tsx')
 
-  const shell = renderToString(h(App))
-  check('shell renders with boot banner and dock', () => {
-    assert.match(shell, /AyanOS/)
-    assert.match(shell, /AyanOS taskbar/)
+  // First paint is the boot overlay alone — the desktop mounts once boot finishes,
+  // which is what gives the dock and icons their entrance animation.
+  const firstPaint = renderToString(h(App))
+  check('first paint is the boot overlay, and it is skippable', () => {
+    assert.match(firstPaint, /skip \[any key\]/)
+    assert.doesNotMatch(firstPaint, /AyanOS taskbar/)
+  })
+
+  const desktop = renderToString(
+    h(
+      WindowManagerProvider,
+      null,
+      h(SkillFilterProvider, null, h(Desktop, { onOpenPalette: () => {} })),
+    ),
+  )
+  check('desktop renders the dock and every module', () => {
+    assert.match(desktop, /AyanOS taskbar/)
     for (const label of ['About', 'Stack', 'Projects', 'Timeline', 'Contact']) {
-      assert.ok(shell.includes(label), `dock item missing: ${label}`)
+      assert.ok(desktop.includes(label), `dock item missing: ${label}`)
     }
   })
 
