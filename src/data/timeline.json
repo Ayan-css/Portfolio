@@ -1,0 +1,55 @@
+{
+  "note": "Straight from the resume. Nothing added, nothing rounded up.",
+  "entries": [
+    {
+      "id": "bsc-it",
+      "kind": "education",
+      "title": "BSc Information Technology",
+      "org": "Anjuman-I-Islam Kalsekar Technical Campus, New Panvel",
+      "period": "Apr 2025 — Present",
+      "status": "3rd semester in progress",
+      "detail": "SGPA 9.5 (Semester 1) · 9.65 (Semester 2)",
+      "current": true
+    },
+    {
+      "id": "rise-club",
+      "kind": "leadership",
+      "title": "President",
+      "org": "Rise Club",
+      "period": "",
+      "status": "",
+      "detail": "",
+      "current": true
+    },
+    {
+      "id": "git-workshop",
+      "kind": "teaching",
+      "title": "Co-Instructor & Host — Git & GitHub Hands-On Workshop",
+      "org": "",
+      "period": "",
+      "status": "",
+      "detail": "Taught version control fundamentals to peers.",
+      "current": false
+    },
+    {
+      "id": "igniters",
+      "kind": "leadership",
+      "title": "Media Team Member",
+      "org": "Igniters Club, AIKTC (via Unstop)",
+      "period": "",
+      "status": "",
+      "detail": "",
+      "current": false
+    },
+    {
+      "id": "gdsj",
+      "kind": "certification",
+      "title": "Google Developer Student Jam",
+      "org": "Google Developer Groups",
+      "period": "",
+      "status": "",
+      "detail": "Certification.",
+      "current": false
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Ansari Mohd Ayan Nasiruddin",
+  "short": "Ayan",
+  "handle": "ayan",
+  "role": "Full-stack developer",
+  "location": "New Panvel, Maharashtra, India",
+  "email": "ayan48311@gmail.com",
+  "github": "https://github.com/Ayan-css",
+  "githubHandle": "Ayan-css",
+  "linkedin": "",
+  "linkedinHandle": "",
+  "resume": "/resume.pdf",
+  "bio": [
+    "I build backends that have to be right about money. Most of what I know came out of one project: PrintOK, a print-on-demand platform where a customer pays from their phone and a shop's existing PC does the printing.",
+    "That project is where the interesting decisions live — keeping payment state and print state apart so nobody gets charged twice, storing prices as integer paise, freezing a rate card onto a job the moment it's quoted. Everything else on this desktop is either the toolkit that made it possible or practice work from before it."
+  ],
+  "now": "3rd semester BSc IT at AIKTC. President of Rise Club. Currently getting PrintOK in front of its first real shop."
+}

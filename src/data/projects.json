@@ -1,0 +1,182 @@
+{
+  "flagship": {
+    "id": "printok",
+    "name": "PrintOK",
+    "file": "PrintOK.app",
+    "tagline": "Hardware-free print-on-demand.",
+    "status": "pre-launch",
+    "statusNote": "Built, deployed and tested end to end. Not yet running in a real shop — no live customers to claim.",
+    "summary": "A customer walks into a print shop, scans a QR code, uploads their file and pays from their own phone. A background agent on the shop's existing Windows PC picks the job up and prints it. No new hardware, no counter queue, no USB stick.",
+    "problem": "Print shops already own a Windows PC and a printer. The usual fix for queueing is a kiosk or a dedicated print server — more hardware to buy, install and support.",
+    "approach": "Put the ordering flow on the customer's phone and the printing on the machine the shop already has. The only thing installed at the shop is a small .NET agent that polls for jobs it's allowed to print.",
+    "links": [
+      { "label": "Live deployment", "href": "https://printok.vercel.app", "kind": "live" },
+      { "label": "Source", "href": "https://github.com/Ayan-css/PrintOK", "kind": "repo" }
+    ],
+    "stack": [
+      { "name": "Node.js", "tech": "node" },
+      { "name": "Express", "tech": "node" },
+      { "name": "TypeScript", "tech": "ts" },
+      { "name": "Prisma", "tech": "prisma" },
+      { "name": "PostgreSQL", "tech": "pg" },
+      { "name": "C# .NET 8", "tech": "csharp" },
+      { "name": "Docker", "tech": "docker" },
+      { "name": "Razorpay", "tech": "razorpay" }
+    ],
+    "skills": ["languages", "backend", "databases", "cloud", "tools"],
+    "decisions": [
+      {
+        "id": "decoupled-state",
+        "title": "Payment state and print state are decoupled",
+        "short": "Two independent state machines, never one.",
+        "detail": "A paid job and a printed job are different facts. Collapsing them into a single status field means a retry, a webhook replay or a printer jam can charge a customer twice or print a job nobody paid for. Payment transitions are owned by the Razorpay webhook; print transitions are owned by the agent. Neither can advance the other's state."
+      },
+      {
+        "id": "integer-paise",
+        "title": "Pricing is stored in integer paise",
+        "short": "No floats anywhere near money.",
+        "detail": "₹12.40 is stored as 1240, not 12.4. Floating point rounding on a per-page rate multiplied by page count drifts, and a drifting total is a dispute with a customer standing at the counter. Every amount in the database, the API and the gateway call is an integer."
+      },
+      {
+        "id": "frozen-rate-card",
+        "title": "The rate card is frozen at quote time",
+        "short": "The price you were shown is the price you pay.",
+        "detail": "A shop can change its rates at any moment. If pricing were recomputed at capture time, a customer could be quoted one amount and charged another. The rate card in effect is snapshotted onto the job when the quote is generated, so the job carries its own pricing forever."
+      }
+    ],
+    "proof": [
+      {
+        "label": "43 automated tests",
+        "detail": "Including a dedicated PostgreSQL integration suite that runs against a real database, not mocks."
+      },
+      {
+        "label": "CI/CD on GitHub Actions",
+        "detail": "Every push runs the full suite before anything reaches a deploy target."
+      },
+      {
+        "label": "Multi-service deployment",
+        "detail": "API on Render, frontend on Vercel, database and file storage on Supabase."
+      },
+      {
+        "label": "Containerised",
+        "detail": "Docker for the API so the local environment matches the deployed one."
+      }
+    ],
+    "walkthrough": [
+      {
+        "id": "scan",
+        "label": "Scan",
+        "command": "GET /s/:shopSlug",
+        "caption": "Customer scans the shop's QR code. No app install, no account.",
+        "screen": "qr"
+      },
+      {
+        "id": "upload",
+        "label": "Upload",
+        "command": "POST /jobs  →  signed storage URL",
+        "caption": "File goes straight to Supabase storage via a signed URL. The API only ever sees metadata.",
+        "screen": "upload"
+      },
+      {
+        "id": "quote",
+        "label": "Quote",
+        "command": "rateCard frozen → total = 1240 paise",
+        "caption": "Page count and options resolve against the shop's current rate card. That card is snapshotted onto the job.",
+        "screen": "quote"
+      },
+      {
+        "id": "pay",
+        "label": "Pay",
+        "command": "Razorpay order → webhook: payment.captured",
+        "caption": "Payment state advances only on the verified webhook — never on the browser's word.",
+        "screen": "pay"
+      },
+      {
+        "id": "queued",
+        "label": "Queued",
+        "command": "printState: PENDING",
+        "caption": "The job enters the shop's print queue. Payment is settled; nothing has printed yet.",
+        "screen": "queued"
+      },
+      {
+        "id": "agent",
+        "label": "Agent prints",
+        "command": "agent poll → claim → printState: PRINTED",
+        "caption": "The .NET agent on the shop's own Windows PC claims the job and sends it to the existing printer.",
+        "screen": "agent"
+      }
+    ]
+  },
+  "porejects": {
+    "folder": "Porejects",
+    "note": "Practice work — small apps built to learn a specific thing. Grouped on purpose: none of these is PrintOK-scale.",
+    "items": [
+      {
+        "id": "expense-tracker",
+        "name": "Expense Tracker",
+        "file": "expense-tracker",
+        "learned": "Categorised spending with running totals and persisted state.",
+        "note": "Built to get comfortable with derived state and localStorage persistence.",
+        "stack": ["React", "JavaScript", "CSS"],
+        "skills": ["languages", "frontend"],
+        "repo": "",
+        "screenshot": ""
+      },
+      {
+        "id": "ecommerce-cart",
+        "name": "E-commerce Cart",
+        "file": "ecommerce-cart",
+        "learned": "Cart add/remove/quantity logic with a live order total.",
+        "note": "The exercise was keeping one source of truth for the cart instead of scattering counts across components.",
+        "stack": ["React", "JavaScript", "CSS"],
+        "skills": ["languages", "frontend"],
+        "repo": "",
+        "screenshot": ""
+      },
+      {
+        "id": "todo-app",
+        "name": "To-Do App",
+        "file": "todo-app",
+        "learned": "CRUD, filtering and completion state — the classic baseline.",
+        "note": "First app where state lived in one place rather than in the DOM.",
+        "stack": ["JavaScript", "HTML", "CSS"],
+        "skills": ["languages", "frontend"],
+        "repo": "",
+        "screenshot": ""
+      },
+      {
+        "id": "weather-app",
+        "name": "Weather App",
+        "file": "weather-app",
+        "learned": "Consuming a third-party REST API with loading and error states.",
+        "note": "Where async handling and \"what does this look like when the request fails\" clicked.",
+        "stack": ["JavaScript", "REST API", "CSS"],
+        "skills": ["languages", "frontend", "backend"],
+        "repo": "",
+        "screenshot": ""
+      },
+      {
+        "id": "quiz-app",
+        "name": "Quiz App",
+        "file": "quiz-app",
+        "learned": "Question flow, scoring and per-answer feedback.",
+        "note": "Practice at modelling a multi-step flow as data instead of hardcoded screens.",
+        "stack": ["JavaScript", "HTML", "CSS"],
+        "skills": ["languages", "frontend"],
+        "repo": "",
+        "screenshot": ""
+      },
+      {
+        "id": "project-management",
+        "name": "Project Management Tool",
+        "file": "project-management",
+        "learned": "Tasks grouped by status, moved between columns.",
+        "note": "Largest of the practice set — the one that made a real backend feel necessary.",
+        "stack": ["React", "JavaScript", "CSS"],
+        "skills": ["languages", "frontend"],
+        "repo": "",
+        "screenshot": ""
+      }
+    ]
+  }
+}
