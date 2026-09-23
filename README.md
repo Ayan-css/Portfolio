@@ -126,31 +126,6 @@ to `profile.json` and the Contact module if you want it surfaced.
 `npm run check` fails the build if invented metrics — user counts, proficiency
 percentages, "customers served" — ever appear in any module.
 
-## GitHub profile README
-
-`github-profile/` is a drop-in folder for the special `Ayan-css/Ayan-css`
-repository that renders on the GitHub profile page. Copy its contents to that
-repo's root — README.md plus the `assets/` folder — and create the repo if it
-doesn't exist. Nothing in this project depends on it.
-
-GitHub's Markdown sanitiser strips `<style>` blocks and `style=` attributes, so
-CSS written into the `.md` silently disappears. The theme instead lives in four
-self-contained SVG cards under `github-profile/assets/`, which GitHub renders as
-images and which *do* support a full `<style>` block — including the header's
-blinking caret:
-
-| | |
-|---|---|
-| `header.svg` | the boot sequence, as a terminal window |
-| `about.svg` | the neofetch card from the About module |
-| `architecture.svg` | PrintOK's payment/print split |
-| `graveyard.svg` | four pixel headstones, generated from the same sprite map as `Headstone.tsx` |
-
-An SVG loaded as an image can't fetch anything, so the cards use no web fonts and
-no external references — they fall back through `ui-monospace` to whatever
-monospace the reader has. Each carries its own dark background, so it reads the
-same on GitHub's light and dark themes without needing `<picture>` variants.
-
 ## Deploying
 
 It's a static build; `npm run build` emits `dist/`.
