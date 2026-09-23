@@ -91,6 +91,11 @@ export interface Poreject {
   note: string
   stack: string[]
   skills: SkillCategoryId[]
+  /**
+   * Only 'mid-progress' is ever asserted in the UI. An empty value makes no
+   * claim — it never implies the project was finished.
+   */
+  progress: '' | 'mid-progress'
   /** Empty until a real repo URL exists — the UI hides the link rather than shipping a 404. */
   repo: string
   /** Optional path under public/. Falls back to a generated placeholder. */

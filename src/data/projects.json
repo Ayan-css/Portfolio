@@ -10,20 +10,58 @@
     "problem": "Print shops already own a Windows PC and a printer. The usual fix for queueing is a kiosk or a dedicated print server — more hardware to buy, install and support.",
     "approach": "Put the ordering flow on the customer's phone and the printing on the machine the shop already has. The only thing installed at the shop is a small .NET agent that polls for jobs it's allowed to print.",
     "links": [
-      { "label": "Live deployment", "href": "https://printok.vercel.app", "kind": "live" },
-      { "label": "Source", "href": "https://github.com/Ayan-css/PrintOK", "kind": "repo" }
+      {
+        "label": "Live deployment",
+        "href": "https://printok.vercel.app",
+        "kind": "live"
+      },
+      {
+        "label": "Source",
+        "href": "https://github.com/Ayan-css/PrintOK",
+        "kind": "repo"
+      }
     ],
     "stack": [
-      { "name": "Node.js", "tech": "node" },
-      { "name": "Express", "tech": "node" },
-      { "name": "TypeScript", "tech": "ts" },
-      { "name": "Prisma", "tech": "prisma" },
-      { "name": "PostgreSQL", "tech": "pg" },
-      { "name": "C# .NET 8", "tech": "csharp" },
-      { "name": "Docker", "tech": "docker" },
-      { "name": "Razorpay", "tech": "razorpay" }
+      {
+        "name": "Node.js",
+        "tech": "node"
+      },
+      {
+        "name": "Express",
+        "tech": "node"
+      },
+      {
+        "name": "TypeScript",
+        "tech": "ts"
+      },
+      {
+        "name": "Prisma",
+        "tech": "prisma"
+      },
+      {
+        "name": "PostgreSQL",
+        "tech": "pg"
+      },
+      {
+        "name": "C# .NET 8",
+        "tech": "csharp"
+      },
+      {
+        "name": "Docker",
+        "tech": "docker"
+      },
+      {
+        "name": "Razorpay",
+        "tech": "razorpay"
+      }
     ],
-    "skills": ["languages", "backend", "databases", "cloud", "tools"],
+    "skills": [
+      "languages",
+      "backend",
+      "databases",
+      "cloud",
+      "tools"
+    ],
     "decisions": [
       {
         "id": "decoupled-state",
@@ -117,10 +155,18 @@
         "file": "expense-tracker",
         "learned": "Categorised spending with running totals and persisted state.",
         "note": "Built to get comfortable with derived state and localStorage persistence.",
-        "stack": ["React", "JavaScript", "CSS"],
-        "skills": ["languages", "frontend"],
+        "stack": [
+          "React",
+          "JavaScript",
+          "CSS"
+        ],
+        "skills": [
+          "languages",
+          "frontend"
+        ],
         "repo": "",
-        "screenshot": ""
+        "screenshot": "",
+        "progress": ""
       },
       {
         "id": "ecommerce-cart",
@@ -128,10 +174,18 @@
         "file": "ecommerce-cart",
         "learned": "Cart add/remove/quantity logic with a live order total.",
         "note": "The exercise was keeping one source of truth for the cart instead of scattering counts across components.",
-        "stack": ["React", "JavaScript", "CSS"],
-        "skills": ["languages", "frontend"],
+        "stack": [
+          "React",
+          "JavaScript",
+          "CSS"
+        ],
+        "skills": [
+          "languages",
+          "frontend"
+        ],
         "repo": "",
-        "screenshot": ""
+        "screenshot": "",
+        "progress": ""
       },
       {
         "id": "todo-app",
@@ -139,10 +193,18 @@
         "file": "todo-app",
         "learned": "CRUD, filtering and completion state — the classic baseline.",
         "note": "First app where state lived in one place rather than in the DOM.",
-        "stack": ["JavaScript", "HTML", "CSS"],
-        "skills": ["languages", "frontend"],
+        "stack": [
+          "JavaScript",
+          "HTML",
+          "CSS"
+        ],
+        "skills": [
+          "languages",
+          "frontend"
+        ],
         "repo": "",
-        "screenshot": ""
+        "screenshot": "",
+        "progress": ""
       },
       {
         "id": "weather-app",
@@ -150,10 +212,19 @@
         "file": "weather-app",
         "learned": "Consuming a third-party REST API with loading and error states.",
         "note": "Where async handling and \"what does this look like when the request fails\" clicked.",
-        "stack": ["JavaScript", "REST API", "CSS"],
-        "skills": ["languages", "frontend", "backend"],
+        "stack": [
+          "JavaScript",
+          "REST API",
+          "CSS"
+        ],
+        "skills": [
+          "languages",
+          "frontend",
+          "backend"
+        ],
         "repo": "",
-        "screenshot": ""
+        "screenshot": "",
+        "progress": ""
       },
       {
         "id": "quiz-app",
@@ -161,10 +232,18 @@
         "file": "quiz-app",
         "learned": "Question flow, scoring and per-answer feedback.",
         "note": "Practice at modelling a multi-step flow as data instead of hardcoded screens.",
-        "stack": ["JavaScript", "HTML", "CSS"],
-        "skills": ["languages", "frontend"],
+        "stack": [
+          "JavaScript",
+          "HTML",
+          "CSS"
+        ],
+        "skills": [
+          "languages",
+          "frontend"
+        ],
         "repo": "",
-        "screenshot": ""
+        "screenshot": "",
+        "progress": ""
       },
       {
         "id": "project-management",
@@ -172,11 +251,20 @@
         "file": "project-management",
         "learned": "Tasks grouped by status, moved between columns.",
         "note": "Largest of the practice set — the one that made a real backend feel necessary.",
-        "stack": ["React", "JavaScript", "CSS"],
-        "skills": ["languages", "frontend"],
+        "stack": [
+          "React",
+          "JavaScript",
+          "CSS"
+        ],
+        "skills": [
+          "languages",
+          "frontend"
+        ],
         "repo": "",
-        "screenshot": ""
+        "screenshot": "",
+        "progress": ""
       }
-    ]
+    ],
+    "progressNote": "Set progress to \"mid-progress\" on anything you started and stopped. It gets a headstone and drops in like one; an empty value claims nothing."
   }
 }
