@@ -1,6 +1,9 @@
 import { About } from '@/components/sections/About'
 import { TechStack } from '@/components/sections/TechStack'
 import { Timeline } from '@/components/sections/Timeline'
+import { Projects } from '@/components/sections/Projects'
+import { PrintOKApp } from '@/components/projects/PrintOKApp'
+import { PorojectsFolder } from '@/components/projects/PorojectsFolder'
 import type { WindowId } from '@/lib/windowMeta'
 
 /**
@@ -10,17 +13,13 @@ import type { WindowId } from '@/lib/windowMeta'
 export const WINDOW_CONTENT: Record<WindowId, () => React.ReactElement> = {
   about: About,
   stack: TechStack,
+  projects: Projects,
   timeline: Timeline,
-  projects: () => <Pending name="~/projects" />,
-  printok: () => <Pending name="PrintOK.app" />,
-  porejects: () => <Pending name="Porejects/" />,
-  contact: () => <Pending name="contact" />,
-}
-
-function Pending({ name }: { name: string }) {
-  return (
+  printok: PrintOKApp,
+  porejects: PorojectsFolder,
+  contact: () => (
     <div className="chrome text-os-faint grid h-full place-items-center p-8 text-[12px]">
-      {name} — module not mounted yet
+      contact — module not mounted yet
     </div>
-  )
+  ),
 }
