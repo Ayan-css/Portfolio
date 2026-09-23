@@ -48,7 +48,14 @@ export function Desktop({ onOpenPalette, paletteOpen }: DesktopProps) {
       </div>
 
       {isMobile && visible.length === 0 && <MobileHome />}
-      {!isMobile && visible.length === 0 && <DesktopGame active={!paletteOpen} />}
+      {/* Always mounted on desktop: hiding it rather than unmounting is what
+          lets the same snake carry on after you close a window. */}
+      {!isMobile && (
+        <DesktopGame
+          active={!paletteOpen && visible.length === 0}
+          shown={visible.length === 0}
+        />
+      )}
 
       <Dock onOpenPalette={onOpenPalette} />
     </div>

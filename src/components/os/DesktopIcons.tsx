@@ -1,4 +1,4 @@
-import { FileText, FolderOpen, Package, Terminal, type LucideIcon } from 'lucide-react'
+import { Clock, FileText, FolderOpen, Package, Terminal, type LucideIcon } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useWindows } from '@/hooks/useWindowManager'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
@@ -8,6 +8,7 @@ const ICONS: { id: WindowId; label: string; Icon: LucideIcon; accent?: boolean }
   { id: 'projects', label: 'projects', Icon: FolderOpen, accent: true },
   { id: 'about', label: 'about.md', Icon: FileText },
   { id: 'stack', label: 'stack', Icon: Package },
+  { id: 'timeline', label: 'timeline', Icon: Clock },
   { id: 'contact', label: 'contact', Icon: Terminal },
 ]
 
@@ -28,6 +29,7 @@ export function DesktopIcons() {
           <button
             type="button"
             onClick={() => open(id)}
+            data-window-id={id}
             className="hover:bg-os-surface/70 focus-visible:bg-os-surface/70 group flex w-full flex-col items-center gap-1.5 rounded-lg px-1 py-2.5 transition-colors duration-150"
           >
             <Icon

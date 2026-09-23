@@ -72,6 +72,20 @@ Three ideas hold it together:
 Palette easter eggs: `sudo make coffee`, `uptime`, `cat resume.pdf`, `reboot`,
 `killall windows`.
 
+## The home screen
+
+With no windows open, the desktop is a game of Snake. Arrows or WASD to play,
+`space` to pause.
+
+The arena has a doorway cut into its left wall. Steer out through it and the
+desktop itself becomes the board: the desktop icons light up, and driving the
+head into one opens that window. The game stays mounted behind whatever you
+opened, so closing it drops you back with the same snake, same length, same
+score — you carry on to the next icon rather than starting over.
+
+Desktop only. The dock opens every one of those modules in one click, so the
+game is a second route, never the only one.
+
 ## Configuration
 
 ### Contact form (EmailJS)
