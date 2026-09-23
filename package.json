@@ -3,12 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "AyanOS — interactive developer portfolio for Ansari Mohd Ayan Nasiruddin",
+  "description": "AyanOS \u2014 interactive developer portfolio for Ansari Mohd Ayan Nasiruddin",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "tsc -b --noEmit"
+    "lint": "tsc -b --noEmit",
+    "check": "node smoke.mjs",
+    "verify": "npm run build && npm run check"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

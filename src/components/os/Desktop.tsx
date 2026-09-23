@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useWindows } from '@/hooks/useWindowManager'
 import { useIsMobile } from '@/hooks/useMediaQuery'
+import { useCursorGlow } from '@/hooks/useCursorGlow'
 import { Window } from './Window'
 import { Dock } from './Dock'
 import { DesktopIcons } from './DesktopIcons'
@@ -10,7 +11,9 @@ import { WINDOW_CONTENT } from './registry'
 export function Desktop({ onOpenPalette }: { onOpenPalette: () => void }) {
   const { windows, topId } = useWindows()
   const surface = useRef<HTMLDivElement>(null)
+  const shell = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
+  const glowing = useCursorGlow(shell)
 
   // On mobile only the focused window is on screen — stacked sheets would trap scroll.
   const visible = windows.filter(
@@ -18,7 +21,10 @@ export function Desktop({ onOpenPalette }: { onOpenPalette: () => void }) {
   )
 
   return (
-    <div className="os-wallpaper relative h-full w-full overflow-hidden">
+    <div
+      ref={shell}
+      className={`os-wallpaper relative h-full w-full overflow-hidden ${glowing ? "os-glow" : ""}`}
+    >
       <div ref={surface} className="absolute inset-0 bottom-[84px]">
         {!isMobile && <DesktopIcons />}
 
@@ -34,8 +40,8 @@ export function Desktop({ onOpenPalette }: { onOpenPalette: () => void }) {
         </AnimatePresence>
       </div>
 
-      {isMobile && windows.length === 0 && <MobileHome />}
-      {!isMobile && windows.length === 0 && <EmptyHint />}
+      {isMobile && visible.length === 0 && <MobileHome />}
+      {!isMobile && visible.length === 0 && <EmptyHint />}
 
       <Dock onOpenPalette={onOpenPalette} />
     </div>

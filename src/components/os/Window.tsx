@@ -32,6 +32,7 @@ export function Window({ win, bounds, children }: WindowProps) {
         role="dialog"
         aria-label={meta.title}
         className="bg-os-surface border-os-line fixed inset-x-0 top-0 bottom-20 z-30 flex flex-col border-t"
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
         initial={reduced ? false : { y: '100%' }}
         animate={{ y: 0 }}
         exit={reduced ? undefined : { y: '100%' }}

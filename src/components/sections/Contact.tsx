@@ -64,6 +64,8 @@ export function Contact() {
         <div className="chrome text-[12.5px] leading-[2]">
           <p className="text-accent">$ send_message --to={profile.handle}</p>
           <motion.p
+            role="status"
+            aria-live="polite"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-tech-node"
@@ -104,6 +106,10 @@ export function Contact() {
           disabled={sending}
           multiline
         />
+
+        <p role="status" aria-live="polite" className="sr-only">
+          {sending ? 'sending message' : status.kind === 'error' ? `error: ${status.text}` : ''}
+        </p>
 
         {status.kind === 'error' && (
           <p className="mt-3 text-[11.5px] text-red-400">

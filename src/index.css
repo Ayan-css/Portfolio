@@ -87,6 +87,19 @@
     background-size: 32px 32px;
   }
 
+  /* Faint pool of light under the cursor. Position comes from --glow-x/y. */
+  .os-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      320px circle at var(--glow-x, 50%) var(--glow-y, 40%),
+      rgba(232, 163, 61, 0.045),
+      transparent 70%
+    );
+  }
+
   .os-scroll {
     scrollbar-width: thin;
     scrollbar-color: var(--color-os-line-strong) transparent;
