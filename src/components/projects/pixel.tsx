@@ -22,6 +22,10 @@ export const PIXEL: Record<string, string> = {
   f: '#e8a33d', // petal, the accent
   F: '#4d7a3f', // stem
 
+  // wood
+  w: '#c56a4a',
+  W: '#8f4a32',
+
   // character
   H: '#2e2a33', // hair
   S: '#d9a271', // skin
@@ -38,22 +42,25 @@ interface RowsProps {
   width: number
   /** Row index the first string starts at. */
   top?: number
+  /** Per-instance colour swaps, so one sprite can serve many objects. */
+  overrides?: Record<string, string>
 }
 
-export function PixelRows({ rows, width, top = 0 }: RowsProps) {
+export function PixelRows({ rows, width, top = 0, overrides }: RowsProps) {
+  const color = (key: string) => overrides?.[key] ?? PIXEL[key]
   return (
     <>
       {rows.flatMap((row, y) => {
         const offset = (width - row.length) / 2
         return [...row].map((key, x) =>
-          PIXEL[key] ? (
+          color(key) ? (
             <rect
               key={`${x}-${y}`}
               x={offset + x}
               y={top + y}
               width="1"
               height="1"
-              fill={PIXEL[key]}
+              fill={color(key)}
             />
           ) : null,
         )

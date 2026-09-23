@@ -1,87 +1,81 @@
 import { PixelRows, stoneRow } from './pixel'
 
 /**
- * The same headstone at scene scale: a pixel stone standing on a strip of
- * grass, with the engraving set in crisp monospace over it. Sprite art plus a
- * readable bitmap-style label is exactly how a game renders a named object,
- * and it keeps the filename legible at a size pixels couldn't spell.
+ * A grave at scene scale. The stone is deliberately portrait — 18 units wide
+ * by 22 tall — because a headstone wider than it is tall reads as squat no
+ * matter how well it's drawn.
+ *
+ * That leaves no room to engrave a filename across it, so the name sits on a
+ * nameplate beneath the scene instead, the way a game labels an object you're
+ * looking at. The stone itself stays pure pixel art with a carved cross,
+ * matching the icon in the row exactly.
  */
 const GRID = 48
-const STONE_TOP = 2
 
-// Tapered shoulders, then a straight body, then the base course.
+const plain = stoneRow(18)
+const vertical = 'ol' + 'm'.repeat(6) + 'ee' + 'm'.repeat(6) + 'do'
+const horizontal = 'ol' + 'mm' + 'e'.repeat(10) + 'mm' + 'do'
+
 const STONE = [
-  'o'.repeat(14),
-  stoneRow(20, 2),
-  stoneRow(26, 2),
-  stoneRow(30, 2),
-  stoneRow(32, 2),
-  ...Array.from({ length: 16 }, () => stoneRow(34)),
-  'o'.repeat(34),
+  'o'.repeat(8),
+  stoneRow(12, 2),
+  stoneRow(16, 2),
+  stoneRow(18, 2),
+  plain,
+  vertical,
+  vertical,
+  horizontal,
+  vertical,
+  vertical,
+  ...Array.from({ length: 10 }, () => plain),
+  'o'.repeat(18),
 ]
 
-// Grass runs the full width; the speckles stop it reading as a printed rule.
 const GROUND = [
   Array.from({ length: GRID }, (_, i) => (i % 7 === 2 || i % 11 === 5 ? 'G' : 'g')).join(''),
   Array.from({ length: GRID }, (_, i) => (i % 5 === 1 ? 'g' : 'G')).join(''),
 ]
 
-/** One flower, off to the side. The only warm thing in the scene besides the engraving. */
+/** A second stone set back, drawn in the ground's own greys — depth, not detail. */
+const DISTANT = ['oooo', 'ommmo', 'ommmo', 'ommmo', 'ommmo', 'ooooo']
+const DISTANT_TINT = { o: '#101014', m: '#26262c' }
+
 const FLOWER = ['.f.', 'fFf', '.F.', '.F.']
 
 export function Gravestone({ file }: { file: string }) {
-  // Chiselled text: the lit glyph with its shadow dropped a third of a pixel below.
-  const engrave = (text: string, y: number, size: number, accent = false) => (
-    <>
-      <text
-        x={GRID / 2}
-        y={y + size * 0.14}
-        textAnchor="middle"
-        className="chrome"
-        fontSize={size}
-        fill="#2a2a32"
-      >
-        {text}
-      </text>
-      <text
-        x={GRID / 2}
-        y={y}
-        textAnchor="middle"
-        className="chrome"
-        fontSize={size}
-        fill={accent ? '#e8a33d' : '#d2d2da'}
-        opacity={accent ? 0.9 : 0.72}
-      >
-        {text}
-      </text>
-    </>
-  )
-
   return (
     <svg
-      viewBox={`0 0 ${GRID} 32`}
+      viewBox={`0 0 ${GRID} 34`}
       role="img"
       aria-label={`Headstone for ${file}, a project left mid-progress`}
       shapeRendering="crispEdges"
       className="border-os-line bg-os-void h-[112px] w-full shrink-0 rounded-md border sm:w-[168px]"
     >
-      <PixelRows rows={STONE} width={GRID} top={STONE_TOP} />
+      <g transform="translate(-15 0)">
+        <PixelRows rows={DISTANT} width={GRID} top={17} overrides={DISTANT_TINT} />
+      </g>
+
+      <PixelRows rows={STONE} width={GRID} top={2} />
       <PixelRows rows={GROUND} width={GRID} top={24} />
 
-      {/* Tufts and a flower, pushed to the edges so they never crowd the stone. */}
-      <g transform="translate(-16 0)">
+      <g transform="translate(-17 0)">
         <PixelRows rows={FLOWER} width={GRID} top={20} />
       </g>
-      <g transform="translate(17 0)">
+      <g transform="translate(16 0)">
         <PixelRows rows={['.g.', 'gGg']} width={GRID} top={22} />
       </g>
 
-      {/* Engraving is not pixel art — it has to spell a filename. */}
+      {/* Nameplate. Crisp monospace, because it has to spell a filename. */}
       <g shapeRendering="auto">
-        {engrave('>_', 10.5, 3.4, true)}
-        {engrave(file, 16.4, 2.4)}
-        <rect x={GRID / 2 - 9} y="18.4" width="18" height="0.4" fill="#5a5a66" />
-        {engrave('left mid-progress', 21.6, 1.9)}
+        <text x="4" y="29.6" className="chrome" fontSize="2.8" fill="#e8a33d" opacity="0.9">
+          &gt;
+        </text>
+        <text x="8" y="29.6" className="chrome" fontSize="2.8" fill="#d2d2da" opacity="0.82">
+          {file}
+        </text>
+        <text x="4" y="32.6" className="chrome" fontSize="2" fill="#62626c">
+          left mid-progress
+        </text>
       </g>
     </svg>
   )
