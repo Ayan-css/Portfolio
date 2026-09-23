@@ -31,6 +31,15 @@
   --color-tech-python: #f2c14e;
   --color-tech-neutral: #7d7d87;
 
+  /* Indie palette. Six hues, used only where colour means something —
+     a category, a kind of entry, a sprite. Never as decoration. */
+  --color-pix-grass: #5fa04e;
+  --color-pix-gold: #e8a33d;
+  --color-pix-rust: #c56a4a;
+  --color-pix-violet: #8b7bc7;
+  --color-pix-sky: #5b9dd9;
+  --color-pix-bone: #b4b4be;
+
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 

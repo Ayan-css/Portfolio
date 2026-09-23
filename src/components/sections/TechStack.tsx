@@ -14,13 +14,14 @@ import { useSkillFilter } from '@/hooks/useSkillFilter'
 import { useWindows } from '@/hooks/useWindowManager'
 import { TechTag, SectionHead, Pane } from '@/components/ui'
 
-const ICONS: Record<string, LucideIcon> = {
-  code: Code2,
-  layout: Layout,
-  server: Server,
-  database: Database,
-  cloud: Cloud,
-  wrench: Wrench,
+/** Each category owns a hue, so the grid is scannable before you read a word. */
+const ICONS: Record<string, { Icon: LucideIcon; color: string }> = {
+  code: { Icon: Code2, color: '#e8a33d' },
+  layout: { Icon: Layout, color: '#5b9dd9' },
+  server: { Icon: Server, color: '#5fa04e' },
+  database: { Icon: Database, color: '#4a90b8' },
+  cloud: { Icon: Cloud, color: '#8b7bc7' },
+  wrench: { Icon: Wrench, color: '#c56a4a' },
 }
 
 export function TechStack() {
@@ -39,7 +40,7 @@ export function TechStack() {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {skillCategories.map((category, index) => {
-          const Icon = ICONS[category.icon] ?? Code2
+          const { Icon, color } = ICONS[category.icon] ?? ICONS.code
           const isActive = active === category.id
 
           return (
@@ -57,21 +58,21 @@ export function TechStack() {
                   if (!isActive) open('projects')
                 }}
                 className={`h-full w-full rounded-lg border p-4 text-left transition-colors duration-150 ${
-                  isActive
-                    ? 'border-accent/60 bg-accent/[0.07]'
-                    : 'border-os-line bg-os-raised/40 hover:border-os-line-strong'
+                  isActive ? '' : 'border-os-line bg-os-raised/40 hover:border-os-line-strong'
                 }`}
+                style={
+                  isActive ? { borderColor: `${color}8a`, backgroundColor: `${color}12` } : undefined
+                }
               >
                 <div className="mb-3 flex items-center gap-2">
                   <Icon
                     size={14}
                     strokeWidth={1.9}
-                    className={isActive ? 'text-accent' : 'text-os-faint'}
+                    style={{ color, opacity: isActive ? 1 : 0.75 }}
                   />
                   <span
-                    className={`chrome text-[11.5px] tracking-wide ${
-                      isActive ? 'text-accent' : 'text-os-text'
-                    }`}
+                    className="chrome text-[11.5px] tracking-wide"
+                    style={isActive ? { color } : undefined}
                   >
                     {category.label}
                   </span>
