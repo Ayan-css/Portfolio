@@ -42,7 +42,7 @@ function Shell() {
 
   return (
     <>
-      <Desktop onOpenPalette={openPalette} />
+      <Desktop onOpenPalette={openPalette} paletteOpen={paletteOpen} />
       <AnimatePresence>
         {paletteOpen && <CommandPalette onClose={closePalette} />}
       </AnimatePresence>

@@ -41,7 +41,7 @@ try {
     h(
       WindowManagerProvider,
       null,
-      h(SkillFilterProvider, null, h(Desktop, { onOpenPalette: () => {} })),
+      h(SkillFilterProvider, null, h(Desktop, { onOpenPalette: () => {}, paletteOpen: false })),
     ),
   )
   check('desktop renders the dock and every module', () => {
@@ -49,6 +49,14 @@ try {
     for (const label of ['About', 'Stack', 'Projects', 'Timeline', 'Contact']) {
       assert.ok(desktop.includes(label), `dock item missing: ${label}`)
     }
+  })
+
+  check('snake renders on the home screen with its controls', () => {
+    assert.match(desktop, /\$ \.\/snake/)
+    assert.match(desktop, /score/)
+    assert.match(desktop, /command palette/)
+    // The dock is still the plain route to every module — the game is never the only way in.
+    assert.match(desktop, /AyanOS taskbar/)
   })
 
   const renderWindow = (id) =>

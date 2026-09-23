@@ -7,8 +7,15 @@ import { Window } from './Window'
 import { Dock } from './Dock'
 import { DesktopIcons } from './DesktopIcons'
 import { WINDOW_CONTENT } from './registry'
+import { DesktopGame } from './DesktopGame'
 
-export function Desktop({ onOpenPalette }: { onOpenPalette: () => void }) {
+interface DesktopProps {
+  onOpenPalette: () => void
+  /** The game gives up the keyboard while the palette has it. */
+  paletteOpen: boolean
+}
+
+export function Desktop({ onOpenPalette, paletteOpen }: DesktopProps) {
   const { windows, topId } = useWindows()
   const surface = useRef<HTMLDivElement>(null)
   const shell = useRef<HTMLDivElement>(null)
@@ -41,19 +48,10 @@ export function Desktop({ onOpenPalette }: { onOpenPalette: () => void }) {
       </div>
 
       {isMobile && visible.length === 0 && <MobileHome />}
-      {!isMobile && visible.length === 0 && <EmptyHint />}
+      {!isMobile && visible.length === 0 && <DesktopGame active={!paletteOpen} />}
 
       <Dock onOpenPalette={onOpenPalette} />
     </div>
-  )
-}
-
-function EmptyHint() {
-  return (
-    <p className="chrome text-os-faint pointer-events-none absolute inset-x-0 bottom-28 text-center text-[11.5px]">
-      press <kbd className="border-os-line rounded border px-1 py-0.5">⌘K</kbd> for the command
-      palette
-    </p>
   )
 }
 

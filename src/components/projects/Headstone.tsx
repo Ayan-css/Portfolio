@@ -4,7 +4,7 @@ import { PixelRows } from './pixel'
  * Pixel gravestone, icon size: lit stone face, shadowed right edge, carved
  * cross, grass at the base. The sprite indie RPGs put on a dead party member.
  */
-export const GRAVE_SPRITE = [
+const SPRITE = [
   '',
   'oooooo',
   'olmmmmdo',
@@ -33,7 +33,7 @@ export function Headstone({ size = 18 }: { size?: number }) {
       shapeRendering="crispEdges"
       className="shrink-0"
     >
-      <PixelRows rows={GRAVE_SPRITE} width={16} />
+      <PixelRows rows={SPRITE} width={16} />
     </svg>
   )
 }
