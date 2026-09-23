@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+
+/* ── AyanOS design tokens ────────────────────────────────────────────────────
+   Near-black base, four elevation steps, one accent (warm amber).
+   Tech colours are real brand hues, used as a legend in the Stack module.
+   ------------------------------------------------------------------------- */
+@theme {
+  --color-os-void: #08080a;
+  --color-os-bg: #0c0c0d;
+  --color-os-surface: #141416;
+  --color-os-raised: #1c1c1f;
+  --color-os-line: #2a2a2e;
+  --color-os-line-strong: #3a3a40;
+
+  --color-os-text: #e7e7ea;
+  --color-os-dim: #9a9aa4;
+  --color-os-faint: #62626c;
+
+  --color-accent: #e8a33d;
+  --color-accent-soft: #3a2a10;
+  --color-accent-deep: #c4821f;
+
+  --color-tech-node: #5fa04e;
+  --color-tech-ts: #3178c6;
+  --color-tech-pg: #4a90b8;
+  --color-tech-prisma: #5a67d8;
+  --color-tech-csharp: #9b4f96;
+  --color-tech-docker: #2496ed;
+  --color-tech-razorpay: #3395ff;
+  --color-tech-react: #61dafb;
+  --color-tech-python: #f2c14e;
+  --color-tech-neutral: #7d7d87;
+
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-os: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-os-bg);
+    color: var(--color-os-text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+
+  /* System chrome is the only place monospace belongs. */
+  .chrome {
+    font-family: var(--font-mono);
+    font-feature-settings: 'ss01', 'cv01';
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #14100a;
+  }
+
+  /* Desktop wallpaper: a faint grid, no gradients, no glass. */
+  .os-wallpaper {
+    background-color: var(--color-os-bg);
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .os-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-os-line-strong) transparent;
+  }
+  .os-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .os-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-os-line-strong);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 99px;
+  }
+
+  @keyframes os-caret {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  .caret {
+    animation: os-caret 1s step-end infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
