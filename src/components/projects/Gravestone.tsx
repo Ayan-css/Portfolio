@@ -1,23 +1,56 @@
+import { PixelRows, stoneRow } from './pixel'
+
 /**
- * A literal headstone for a project that was started and stopped, drawn in the
- * same language as the rest of the OS: near-black ground, chiselled monospace
- * engraving, one amber accent. Fills the same slot a screenshot would.
+ * The same headstone at scene scale: a pixel stone standing on a strip of
+ * grass, with the engraving set in crisp monospace over it. Sprite art plus a
+ * readable bitmap-style label is exactly how a game renders a named object,
+ * and it keeps the filename legible at a size pixels couldn't spell.
  */
+const GRID = 48
+const STONE_TOP = 2
+
+// Tapered shoulders, then a straight body, then the base course.
+const STONE = [
+  'o'.repeat(14),
+  stoneRow(20, 2),
+  stoneRow(26, 2),
+  stoneRow(30, 2),
+  stoneRow(32, 2),
+  ...Array.from({ length: 16 }, () => stoneRow(34)),
+  'o'.repeat(34),
+]
+
+// Grass runs the full width; the speckles stop it reading as a printed rule.
+const GROUND = [
+  Array.from({ length: GRID }, (_, i) => (i % 7 === 2 || i % 11 === 5 ? 'G' : 'g')).join(''),
+  Array.from({ length: GRID }, (_, i) => (i % 5 === 1 ? 'g' : 'G')).join(''),
+]
+
+/** One flower, off to the side. The only warm thing in the scene besides the engraving. */
+const FLOWER = ['.f.', 'fFf', '.F.', '.F.']
+
 export function Gravestone({ file }: { file: string }) {
-  // Chiselled lettering: a dark shadow dropped just below the lit glyph.
+  // Chiselled text: the lit glyph with its shadow dropped a third of a pixel below.
   const engrave = (text: string, y: number, size: number, accent = false) => (
     <>
-      <text x="84" y={y + 0.7} textAnchor="middle" className="chrome" fontSize={size} fill="#08080a">
+      <text
+        x={GRID / 2}
+        y={y + size * 0.14}
+        textAnchor="middle"
+        className="chrome"
+        fontSize={size}
+        fill="#2a2a32"
+      >
         {text}
       </text>
       <text
-        x="84"
+        x={GRID / 2}
         y={y}
         textAnchor="middle"
         className="chrome"
         fontSize={size}
-        fill={accent ? '#e8a33d' : '#6b6b73'}
-        opacity={accent ? 0.8 : 0.95}
+        fill={accent ? '#e8a33d' : '#d2d2da'}
+        opacity={accent ? 0.9 : 0.72}
       >
         {text}
       </text>
@@ -26,36 +59,30 @@ export function Gravestone({ file }: { file: string }) {
 
   return (
     <svg
-      viewBox="0 0 168 112"
+      viewBox={`0 0 ${GRID} 32`}
       role="img"
       aria-label={`Headstone for ${file}, a project left mid-progress`}
+      shapeRendering="crispEdges"
       className="border-os-line bg-os-void h-[112px] w-full shrink-0 rounded-md border sm:w-[168px]"
     >
-      {/* mound the stone is set into */}
-      <path d="M34 98 q50 -13 100 0 v6 H34 Z" fill="#141416" />
+      <PixelRows rows={STONE} width={GRID} top={STONE_TOP} />
+      <PixelRows rows={GROUND} width={GRID} top={24} />
 
-      {/* the stone */}
-      <path
-        d="M40 98 V50 a44 44 0 0 1 88 0 V98 Z"
-        fill="#1c1c1f"
-        stroke="#3a3a40"
-        strokeWidth="1.2"
-      />
-      {/* inner bevel, so it reads as carved rather than flat */}
-      <path
-        d="M46 98 V50 a38 38 0 0 1 76 0 V98"
-        fill="none"
-        stroke="#2a2a2e"
-        strokeWidth="1"
-      />
+      {/* Tufts and a flower, pushed to the edges so they never crowd the stone. */}
+      <g transform="translate(-16 0)">
+        <PixelRows rows={FLOWER} width={GRID} top={20} />
+      </g>
+      <g transform="translate(17 0)">
+        <PixelRows rows={['.g.', 'gGg']} width={GRID} top={22} />
+      </g>
 
-      {engrave('>_', 34, 9, true)}
-      {engrave(file, 55, 7)}
-      <path d="M62 62 H106" stroke="#2a2a2e" strokeWidth="1" />
-      {engrave('left mid-progress', 74, 5.6)}
-
-      {/* ground line, dashed like everything else in the chrome */}
-      <path d="M6 104 H162" stroke="#2a2a2e" strokeWidth="1" strokeDasharray="3 5" />
+      {/* Engraving is not pixel art — it has to spell a filename. */}
+      <g shapeRendering="auto">
+        {engrave('>_', 10.5, 3.4, true)}
+        {engrave(file, 16.4, 2.4)}
+        <rect x={GRID / 2 - 9} y="18.4" width="18" height="0.4" fill="#5a5a66" />
+        {engrave('left mid-progress', 21.6, 1.9)}
+      </g>
     </svg>
   )
 }
