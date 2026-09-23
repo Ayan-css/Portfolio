@@ -74,9 +74,8 @@ export function PorojectsFolder() {
                 />
 
                 {isGrave ? (
-                  <span className={isOpen ? 'text-accent' : 'text-os-faint'}>
-                    <Headstone />
-                  </span>
+                  // The sprite carries its own palette — no currentColor to inherit.
+                  <Headstone />
                 ) : (
                   <FileCode2
                     size={15}
