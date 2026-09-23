@@ -57,15 +57,18 @@ export function DesktopGame({ active, shown }: GameProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const areaW = viewport.w
-  const areaH = viewport.h - DOCK_H
+  // The playfield covers the whole viewport, dock included — otherwise driving
+  // into the dock hits an invisible wall instead of opening anything.
+  const areaH = viewport.h
 
-  // Whole-cell grid over the entire desktop, with the arena sitting inside it.
   const cols = Math.max(20, Math.floor(areaW / CELL))
   const rows = Math.max(14, Math.floor(areaH / CELL))
   const bw = Math.min(32, cols - 14)
-  const bh = Math.min(18, rows - 6)
+  const bh = Math.min(18, rows - 10)
   const bx = Math.floor((cols - bw) / 2) + 3 // nudged right, clear of the icon column
-  const by = Math.floor((rows - bh) / 2)
+  // Centred on the desktop rather than the viewport, so the arena never sits
+  // under the dock even though the snake can travel there.
+  const by = Math.floor((Math.floor((viewport.h - DOCK_H) / CELL) - bh) / 2)
   const gy = by + Math.floor(bh / 2) - 1 // doorway, centred on the left wall
 
   const snake = useRef<Point[]>([])
@@ -363,7 +366,11 @@ export function DesktopGame({ active, shown }: GameProps) {
   const boardTop = by * CELL
 
   return (
-    <div className={`pointer-events-none absolute inset-0 bottom-[84px] ${shown ? '' : 'hidden'}`}>
+    // z-45 puts the snake above the dock but below the command palette. The
+    // layer is pointer-events-none, so the dock stays clickable underneath.
+    <div
+      className={`pointer-events-none absolute inset-0 z-[45] ${shown ? '' : 'hidden'}`}
+    >
       <canvas
         ref={canvasRef}
         role="img"

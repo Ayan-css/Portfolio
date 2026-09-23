@@ -48,6 +48,7 @@ export function Dock({ onOpenPalette }: { onOpenPalette: () => void }) {
               key={id}
               type="button"
               onClick={() => activate(id)}
+              data-window-id={id}
               aria-label={`${WINDOWS[id].label}${win ? ' (open)' : ''}`}
               aria-pressed={Boolean(win)}
               className={`group relative flex flex-col items-center gap-1 rounded-lg px-3 py-1.5 transition-colors duration-150 sm:px-4 ${
