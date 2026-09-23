@@ -12,9 +12,9 @@ import assert from 'node:assert/strict'
 const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' })
 let failures = 0
 
-const check = (name, fn) => {
+const check = async (name, fn) => {
   try {
-    fn()
+    await fn()
     console.log(`  ok   ${name}`)
   } catch (error) {
     failures += 1
@@ -32,7 +32,7 @@ try {
   // First paint is the boot overlay alone — the desktop mounts once boot finishes,
   // which is what gives the dock and icons their entrance animation.
   const firstPaint = renderToString(h(App))
-  check('first paint is the boot overlay, and it is skippable', () => {
+  await check('first paint is the boot overlay, and it is skippable', () => {
     assert.match(firstPaint, /skip \[any key\]/)
     assert.doesNotMatch(firstPaint, /AyanOS taskbar/)
   })
@@ -44,14 +44,14 @@ try {
       h(SkillFilterProvider, null, h(Desktop, { onOpenPalette: () => {}, paletteOpen: false })),
     ),
   )
-  check('desktop renders the dock and every module', () => {
+  await check('desktop renders the dock and every module', () => {
     assert.match(desktop, /AyanOS taskbar/)
     for (const label of ['About', 'Stack', 'Projects', 'Timeline', 'Contact']) {
       assert.ok(desktop.includes(label), `dock item missing: ${label}`)
     }
   })
 
-  check('snake renders on the home screen with its controls', () => {
+  await check('snake renders on the home screen with its controls', () => {
     assert.match(desktop, /\$ \.\/snake/)
     assert.match(desktop, /score/)
     assert.match(desktop, /command palette/)
@@ -65,12 +65,12 @@ try {
     )
 
   const expectations = {
-    about: [/Ansari Mohd Ayan Nasiruddin/, /ayan48311@gmail\.com/],
+    about: [/Ansari Mohd Ayan Nasiruddin/, /ayan48311@gmail\.com/, /linkedin\.com\/in\/ayan-ansari/],
     stack: [/installed packages/, /TypeScript/, /PostgreSQL/, /Razorpay/],
     projects: [/PrintOK\.app/, /Porejects\//, /flagship/],
     timeline: [/Anjuman-I-Islam/, /9\.65/, /Rise Club/],
-    printok: [/PrintOK/, /pre-launch/, /printok\.vercel\.app/],
-    porejects: [/expense-tracker/, /weather-app/, /project-management/],
+    printok: [/PrintOK/, /pre-launch/, /print-ok-customer-web\.vercel\.app/],
+    porejects: [/expense-tracker/, /weather-app/, /project-management/, /all in one repo/],
     contact: [/send_message/, /github\.com\/Ayan-css/, /ayan48311@gmail\.com/],
   }
 
@@ -81,8 +81,21 @@ try {
     })
   }
 
+  // Links are asserted against the data, not the DOM — a repo link only renders
+  // once its row is expanded, but a wrong or missing URL is always a bug.
+  await check('every external link is present and points where the resume says', async () => {
+    const { flagship, porejects, profile } = await vite.ssrLoadModule('/src/lib/data.ts')
+    const live = flagship.links.find((l) => l.kind === 'live')
+    assert.equal(live.href, 'https://print-ok-customer-web.vercel.app')
+    assert.equal(flagship.links.find((l) => l.kind === 'repo').href, 'https://github.com/Ayan-css/PrintOK')
+    assert.ok(profile.linkedin.includes('linkedin.com/in/'), 'linkedin URL missing')
+    for (const p of porejects) {
+      assert.ok(p.repo.startsWith('https://github.com/'), `${p.id} has no repo URL`)
+    }
+  })
+
   // The honesty constraint, enforced: no invented traction anywhere in the UI.
-  check('no fabricated metrics in any module', () => {
+  await check('no fabricated metrics in any module', () => {
     const all = Object.keys(WINDOW_CONTENT)
       .map(renderWindow)
       .join(' ')

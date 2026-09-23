@@ -235,14 +235,18 @@ export function DesktopGame({ active, shown }: GameProps) {
       if (turn && (turn.x !== -dir.current.x || turn.y !== -dir.current.y)) dir.current = turn
 
       const head = snake.current[0]
-      const next = { x: head.x + dir.current.x, y: head.y + dir.current.y }
-
-      if (next.x < 0 || next.y < 0 || next.x >= cols || next.y >= rows) return die()
+      // The screen edge wraps rather than kills: run off one side, come back on
+      // the other. Only the arena wall and the snake itself are fatal.
+      const next = {
+        x: (head.x + dir.current.x + cols) % cols,
+        y: (head.y + dir.current.y + rows) % rows,
+      }
 
       // The arena wall is solid from both sides; only the doorway lets you through.
+      const wrapped = Math.abs(next.x - head.x) > 1 || Math.abs(next.y - head.y) > 1
       const wasIn = inArena(head)
       const willBeIn = inArena(next)
-      if (wasIn !== willBeIn) {
+      if (!wrapped && wasIn !== willBeIn) {
         const throughDoor =
           next.y === head.y &&
           next.y >= gy &&
@@ -315,22 +319,14 @@ export function DesktopGame({ active, shown }: GameProps) {
       ctx.lineTo(l + 4, (gy + GAP) * CELL)
       ctx.stroke()
 
-      if (!outsideRef.current) {
-        const color = PELLETS[pellet.current]
-        const { x, y } = food.current
-        ctx.fillStyle = color
-        ctx.fillRect(x * CELL + 3, y * CELL + 3, CELL - 6, CELL - 6)
-        ctx.fillStyle = '#0c0c0d'
-        ctx.fillRect(x * CELL + 6, y * CELL + 6, CELL - 12, CELL - 12)
-      } else {
-        // out in the open: ring the icons the head can actually open
-        ctx.strokeStyle = 'rgba(232, 163, 61, 0.55)'
-        ctx.setLineDash([3, 3])
-        for (const target of targets.current) {
-          ctx.strokeRect(target.x - 3, target.y - 3, target.w + 6, target.h + 6)
-        }
-        ctx.setLineDash([])
-      }
+      // The pellet stays drawn even while you're out roaming — it's how you find
+      // your way back in. The icons are left alone; they read as targets already.
+      const color = PELLETS[pellet.current]
+      const { x, y } = food.current
+      ctx.fillStyle = color
+      ctx.fillRect(x * CELL + 3, y * CELL + 3, CELL - 6, CELL - 6)
+      ctx.fillStyle = '#0c0c0d'
+      ctx.fillRect(x * CELL + 6, y * CELL + 6, CELL - 12, CELL - 12)
 
       snake.current.forEach((p, i) => {
         ctx.fillStyle = i === 0 ? '#e8a33d' : i % 2 ? '#a06d1f' : '#c4821f'

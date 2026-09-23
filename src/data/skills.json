@@ -6,12 +6,30 @@
       "label": "Languages",
       "icon": "code",
       "items": [
-        { "name": "JavaScript", "tech": "js" },
-        { "name": "TypeScript", "tech": "ts" },
-        { "name": "Python", "tech": "python" },
-        { "name": "SQL", "tech": "pg" },
-        { "name": "HTML", "tech": "neutral" },
-        { "name": "CSS", "tech": "neutral" }
+        {
+          "name": "JavaScript",
+          "tech": "js"
+        },
+        {
+          "name": "TypeScript",
+          "tech": "ts"
+        },
+        {
+          "name": "Python",
+          "tech": "python"
+        },
+        {
+          "name": "SQL",
+          "tech": "pg"
+        },
+        {
+          "name": "HTML",
+          "tech": "neutral"
+        },
+        {
+          "name": "CSS",
+          "tech": "neutral"
+        }
       ]
     },
     {
@@ -19,9 +37,18 @@
       "label": "Frontend",
       "icon": "layout",
       "items": [
-        { "name": "React", "tech": "react" },
-        { "name": "Tailwind CSS", "tech": "neutral" },
-        { "name": "vanilla JS", "tech": "js" }
+        {
+          "name": "React",
+          "tech": "react"
+        },
+        {
+          "name": "Tailwind CSS",
+          "tech": "neutral"
+        },
+        {
+          "name": "responsive / vanilla JS UI",
+          "tech": "js"
+        }
       ]
     },
     {
@@ -29,10 +56,22 @@
       "label": "Backend",
       "icon": "server",
       "items": [
-        { "name": "Node.js", "tech": "node" },
-        { "name": "Express", "tech": "node" },
-        { "name": "REST API design", "tech": "neutral" },
-        { "name": "WebSockets", "tech": "neutral" }
+        {
+          "name": "Node.js",
+          "tech": "node"
+        },
+        {
+          "name": "Express",
+          "tech": "node"
+        },
+        {
+          "name": "REST API design",
+          "tech": "neutral"
+        },
+        {
+          "name": "WebSockets",
+          "tech": "neutral"
+        }
       ]
     },
     {
@@ -40,10 +79,22 @@
       "label": "Databases",
       "icon": "database",
       "items": [
-        { "name": "PostgreSQL", "tech": "pg" },
-        { "name": "Supabase", "tech": "node" },
-        { "name": "Prisma ORM", "tech": "prisma" },
-        { "name": "MongoDB", "tech": "node" }
+        {
+          "name": "PostgreSQL",
+          "tech": "pg"
+        },
+        {
+          "name": "Supabase",
+          "tech": "node"
+        },
+        {
+          "name": "Prisma ORM",
+          "tech": "prisma"
+        },
+        {
+          "name": "MongoDB",
+          "tech": "node"
+        }
       ]
     },
     {
@@ -51,11 +102,26 @@
       "label": "Cloud & DevOps",
       "icon": "cloud",
       "items": [
-        { "name": "Docker", "tech": "docker" },
-        { "name": "AWS S3", "tech": "neutral" },
-        { "name": "Render", "tech": "neutral" },
-        { "name": "Vercel", "tech": "neutral" },
-        { "name": "GitHub Actions (CI/CD)", "tech": "neutral" }
+        {
+          "name": "Docker",
+          "tech": "docker"
+        },
+        {
+          "name": "AWS S3",
+          "tech": "neutral"
+        },
+        {
+          "name": "Render",
+          "tech": "neutral"
+        },
+        {
+          "name": "Vercel",
+          "tech": "neutral"
+        },
+        {
+          "name": "GitHub Actions (CI/CD)",
+          "tech": "neutral"
+        }
       ]
     },
     {
@@ -63,13 +129,34 @@
       "label": "Tools",
       "icon": "wrench",
       "items": [
-        { "name": "Git / GitHub", "tech": "neutral" },
-        { "name": "Razorpay", "tech": "razorpay" },
-        { "name": "Jest", "tech": "neutral" },
-        { "name": "VS Code", "tech": "neutral" },
-        { "name": "Cursor", "tech": "neutral" },
-        { "name": "Claude", "tech": "neutral" },
-        { "name": "Antigravity", "tech": "neutral" }
+        {
+          "name": "Git / GitHub",
+          "tech": "neutral"
+        },
+        {
+          "name": "Razorpay integration",
+          "tech": "razorpay"
+        },
+        {
+          "name": "Jest",
+          "tech": "neutral"
+        },
+        {
+          "name": "VS Code",
+          "tech": "neutral"
+        },
+        {
+          "name": "Cursor",
+          "tech": "neutral"
+        },
+        {
+          "name": "Claude",
+          "tech": "neutral"
+        },
+        {
+          "name": "Antigravity",
+          "tech": "neutral"
+        }
       ]
     }
   ]

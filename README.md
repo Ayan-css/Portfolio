@@ -78,10 +78,13 @@ With no windows open, the desktop is a game of Snake. Arrows or WASD to play,
 `space` to pause.
 
 The arena has a doorway cut into its left wall. Steer out through it and the
-desktop itself becomes the board: the desktop icons light up, and driving the
-head into one opens that window. The game stays mounted behind whatever you
-opened, so closing it drops you back with the same snake, same length, same
-score — you carry on to the next icon rather than starting over.
+desktop itself becomes the board: the desktop icons and the dock light up, and
+driving the head into one opens that window. The game stays mounted behind
+whatever you opened, so closing it drops you back with the same snake, same
+length, same score — you carry on to the next icon rather than starting over.
+
+Screen edges wrap, so running off one side brings you back on the other. Only
+the arena wall and the snake itself are fatal.
 
 Desktop only. The dock opens every one of those modules in one click, so the
 game is a second route, never the only one.
@@ -102,27 +105,23 @@ Without them the form still works: it validates the input and hands over a
 `mailto:` with the message already written, and it says that's what it's doing.
 It never shows a success state for a message that didn't go anywhere.
 
-### Before going live — the honest-content checklist
+### Content
 
-The portfolio is built to refuse to fake anything, which means a few slots are
-deliberately empty rather than filled with plausible-looking placeholders:
+Everything on the site comes from `src/data/*.json` and is sourced from the
+resume in `public/resume.pdf`. Two slots are still optional rather than empty:
 
-- [ ] **`public/resume.pdf`** — drop the real PDF here. Until then, the palette's
-      `cat resume.pdf` prints `no such file` with an email fallback instead of
-      downloading a 404.
-- [ ] **`src/data/projects.json` → `porejects[].repo`** — the six GitHub URLs.
-      While empty, each preview reads "source link coming" instead of linking
-      somewhere broken.
 - [ ] **`src/data/projects.json` → `porejects[].screenshot`** — optional paths
-      under `public/`. Absent, a generated on-brand app-window thumbnail is
-      drawn instead of a stock illustration.
-- [ ] **`src/data/profile.json` → `linkedin` / `linkedinHandle`** — the LinkedIn
-      row is hidden entirely until these are set.
-- [ ] **`index.html` → canonical / `og:url`** — currently
-      `https://ayanos.vercel.app/`. Change if you deploy elsewhere.
+      under `public/`. Absent, a pixel gravestone or a generated on-brand app
+      window is drawn instead of a stock illustration.
 - [ ] **`og:image`** — not referenced yet, because pointing at an image that
       doesn't exist is worse than having none. Add a 1200×630 PNG to `public/`
       and add the two meta tags when you have one.
+- [ ] **`index.html` → canonical / `og:url`** — currently
+      `https://ayanos.vercel.app/`. Change if you deploy elsewhere.
+
+The resume also lists a phone number. It's deliberately not on the site —
+the PDF is downloadable, but a number in the page source gets scraped. Add it
+to `profile.json` and the Contact module if you want it surfaced.
 
 `npm run check` fails the build if invented metrics — user counts, proficiency
 percentages, "customers served" — ever appear in any module.
