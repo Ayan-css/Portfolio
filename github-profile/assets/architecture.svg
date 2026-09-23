@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="344" viewBox="0 0 880 344" role="img" aria-label="PrintOK architecture: customer phone to Express API, Razorpay webhooks drive payment state, a C# agent on the shop's PC drives print state, and the two never advance each other">
+  <style>
+    text { font-family: ui-monospace, "JetBrains Mono", "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+    .n { font-size: 12px; fill: #e7e7ea; }
+    .s { font-size: 9.5px; }
+    .e { font-size: 9.5px; fill: #62626c; }
+    .box { fill: #141416; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 8 4 0 8z" fill="#4a4a52"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 8 4 0 8z" fill="#3395ff"/>
+    </marker>
+    <marker id="ap" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 8 4 0 8z" fill="#9b4f96"/>
+    </marker>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="343" rx="10" fill="#0c0c0d" stroke="#2a2a2e"/>
+  <text class="e" x="24" y="30" fill="#e8a33d">two state machines, one job row — neither can advance the other</text>
+
+  <!-- edges: 80px gaps between columns, so no label ever runs under a box -->
+  <g fill="none">
+    <path d="M150 178H230" stroke="#4a4a52" marker-end="url(#a)"/>
+    <path d="M390 178H470" stroke="#4a4a52" marker-end="url(#a)"/>
+    <path d="M615 178H695" stroke="#9b4f96" stroke-dasharray="4 4" marker-end="url(#ap)"/>
+    <path d="M310 106V150" stroke="#3395ff" marker-end="url(#ab)"/>
+    <path d="M310 248V206" stroke="#4a4a52" marker-end="url(#a)"/>
+    <path d="M777 206V248" stroke="#9b4f96" marker-end="url(#ap)"/>
+  </g>
+  <g class="e">
+    <text x="190" y="170" text-anchor="middle">scan · upload</text>
+    <text x="430" y="170" text-anchor="middle">job row</text>
+    <text x="655" y="170" text-anchor="middle" fill="#9b4f96">poll · claim</text>
+    <text x="320" y="133" fill="#3395ff">payment.captured</text>
+    <text x="320" y="233">file · signed S3 URL</text>
+    <text x="787" y="233" fill="#9b4f96">print</text>
+  </g>
+
+  <!-- nodes -->
+  <rect class="box" x="20"  y="150" width="130" height="56" rx="6" stroke="#7d7d87" stroke-opacity=".55"/>
+  <text class="n" x="32" y="174">customer phone</text><text class="s" x="32" y="192" fill="#7d7d87">browser · no app</text>
+
+  <rect class="box" x="230" y="54"  width="160" height="52" rx="6" stroke="#3395ff" stroke-opacity=".55"/>
+  <text class="n" x="242" y="78">Razorpay</text><text class="s" x="242" y="95" fill="#3395ff">verified webhook</text>
+
+  <rect class="box" x="230" y="150" width="160" height="56" rx="6" stroke="#5fa04e" stroke-opacity=".55"/>
+  <text class="n" x="242" y="174">Express API</text><text class="s" x="242" y="192" fill="#5fa04e">TypeScript · Docker</text>
+
+  <rect class="box" x="230" y="248" width="160" height="50" rx="6" stroke="#7d7d87" stroke-opacity=".55"/>
+  <text class="n" x="242" y="271">AWS S3</text><text class="s" x="242" y="288" fill="#7d7d87">document storage</text>
+
+  <rect class="box" x="470" y="150" width="145" height="56" rx="6" stroke="#4a90b8" stroke-opacity=".55"/>
+  <text class="n" x="482" y="174">PostgreSQL</text><text class="s" x="482" y="192" fill="#4a90b8">Prisma</text>
+
+  <rect class="box" x="695" y="150" width="165" height="56" rx="6" stroke="#9b4f96" stroke-opacity=".55"/>
+  <text class="n" x="707" y="174">print agent</text><text class="s" x="707" y="192" fill="#9b4f96">C# .NET 8 · shop PC</text>
+
+  <rect class="box" x="695" y="248" width="165" height="50" rx="6" stroke="#7d7d87" stroke-opacity=".55"/>
+  <text class="n" x="707" y="271">existing printer</text><text class="s" x="707" y="288" fill="#7d7d87">no new hardware</text>
+
+  <!-- legend, so the two colours are named instead of floating -->
+  <g class="e">
+    <circle cx="26" cy="322" r="4" fill="#3395ff"/>
+    <text x="38" y="325" fill="#3395ff">payment state</text>
+    <circle cx="166" cy="322" r="4" fill="#9b4f96"/>
+    <text x="178" y="325" fill="#9b4f96">print state</text>
+  </g>
+</svg>

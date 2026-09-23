@@ -1,30 +1,9 @@
-```
-AyanOS 1.0.0 — boot
-$ whoami
-ansari mohd ayan nasiruddin · full-stack developer
-$ loading skills.json...
-ok — 6 categories, 0 proficiency bars
-$ mounting projects/...
-ok — PrintOK.app + Porejects/ (6)
-$ startx
-```
-
-```
-   ╔══════════╗   ayan@ayanos
-   ║  ╭────╮  ║   ─────────────────────────────────────────────
-   ║  │ >_ │  ║   user        ayan
-   ║  ╰────╯  ║   role        full-stack developer
-   ╠══════════╣   location    Mumbai Suburban, India
-   ║ AyanOS   ║   education   BSc IT · AIKTC · 3rd semester
-   ╚══════════╝   gpa         9.5 (sem 1) · 9.65 (sem 2)
-                  shell       node + typescript
-                  flagship    PrintOK.app
-                  status      building, shipping, looking for
-                              the first shop
-```
+![AyanOS boot sequence](assets/header.svg)
 
 I build backends that have to be right about money. Most of what I know came out
 of one project.
+
+![System info](assets/about.svg)
 
 ---
 
@@ -43,47 +22,37 @@ counter queue, no USB stick.
 QR scan → upload (signed S3 URL) → quote (rate card frozen) → pay → queued → agent prints
 ```
 
-### The decision the whole thing rests on
+![PrintOK architecture](assets/architecture.svg)
 
-```
- ┌─ payment state ───────────────┐  ┌─ print state ─────────────────┐
- │                               │  │                               │
- │  Razorpay                     │  │  .NET 8 agent · shop's own PC │
- │     │ verified webhook        │  │     │ poll → claim            │
- │     ▼                         │  │     ▼                         │
- │  paymentState: CAPTURED       │  │  printState: PRINTED          │
- │                               │  │                               │
- └───────────────┬───────────────┘  └───────────────┬───────────────┘
-                 │                                  │
-                 └─────────── same job row ─────────┘
-                    neither can advance the other
-```
+**Payment state and print state never touch.** A paid job and a printed job are
+different facts. Collapse them into one status field and a webhook replay or a
+printer jam charges someone twice. Two more decisions in the same spirit:
 
-A paid job and a printed job are different facts. Collapse them into one status
-field and a webhook replay or a printer jam charges someone twice.
-
-Two more, same spirit:
-
-- **Prices are integer paise.** `₹12.40` is stored as `1240`. A per-page rate times a
-  page count in floating point drifts, and a drifting total is an argument with a
-  customer standing at the counter.
+- **Prices are integer paise.** `₹12.40` is stored as `1240`. A per-page rate times
+  a page count in floating point drifts, and a drifting total is an argument with
+  a customer standing at the counter.
 - **The rate card is frozen at quote time.** Shops change rates. Snapshot the card
   onto the job when it's quoted, and the price you were shown is the price you pay.
 
-### What exists, rather than what's claimed
+<details>
+<summary><b>What exists, rather than what's claimed</b></summary>
+
+<br>
 
 ```
-43 automated tests          incl. a Postgres integration suite, against a real DB
-REST API                    Express · TypeScript · Prisma/PostgreSQL
-                            job lifecycle, agent pairing, credential revocation,
-                            admin console
-C# .NET 8 agent             self-contained, ships to GitHub Releases via Actions
-CI/CD                       GitHub Actions on push to main
-deployment                  Render (API) · Vercel (web) · Supabase (db/storage)
+43 automated tests    incl. a Postgres integration suite, against a real DB
+REST API              Express · TypeScript · Prisma/PostgreSQL
+                      job lifecycle, agent pairing, credential revocation,
+                      admin console
+C# .NET 8 agent       self-contained, ships to GitHub Releases via Actions
+CI/CD                 GitHub Actions on push to main
+deployment            Render (API) · Vercel (web) · Supabase (db/storage)
 ```
 
-<sub>Pre-launch. Built, deployed and validated end to end — not yet running in a
-real shop, so there are no customers to claim.</sub>
+Pre-launch. Built, deployed and validated end to end — not yet running in a real
+shop, so there are no customers to claim.
+
+</details>
 
 ---
 
@@ -93,7 +62,6 @@ real shop, so there are no customers to claim.</sub>
 only be a guess wearing a percentage sign.</sub>
 
 **Languages**
-
 ![JavaScript](https://img.shields.io/badge/JavaScript-f2c14e?style=flat-square&logo=javascript&logoColor=141416)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=flat-square&logo=typescript&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-f2c14e?style=flat-square&logo=python&logoColor=141416)
@@ -102,27 +70,23 @@ only be a guess wearing a percentage sign.</sub>
 ![CSS](https://img.shields.io/badge/CSS-7d7d87?style=flat-square&logo=css3&logoColor=white)
 
 **Frontend**
-
 ![React](https://img.shields.io/badge/React-61dafb?style=flat-square&logo=react&logoColor=141416)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-7d7d87?style=flat-square&logo=tailwindcss&logoColor=white)
-![vanilla JS](https://img.shields.io/badge/responsive_%2F_vanilla_JS_UI-f2c14e?style=flat-square&logoColor=141416)
+![vanilla JS](https://img.shields.io/badge/responsive_%2F_vanilla_JS_UI-f2c14e?style=flat-square)
 
 **Backend**
-
 ![Node.js](https://img.shields.io/badge/Node.js-5fa04e?style=flat-square&logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5fa04e?style=flat-square&logo=express&logoColor=white)
 ![REST](https://img.shields.io/badge/REST_API_design-7d7d87?style=flat-square)
 ![WebSockets](https://img.shields.io/badge/WebSockets-7d7d87?style=flat-square)
 
 **Databases**
-
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4a90b8?style=flat-square&logo=postgresql&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-5fa04e?style=flat-square&logo=supabase&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-5a67d8?style=flat-square&logo=prisma&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-5fa04e?style=flat-square&logo=mongodb&logoColor=white)
 
 **Cloud & DevOps**
-
 ![Docker](https://img.shields.io/badge/Docker-2496ed?style=flat-square&logo=docker&logoColor=white)
 ![AWS S3](https://img.shields.io/badge/AWS_S3-7d7d87?style=flat-square&logo=amazons3&logoColor=white)
 ![Render](https://img.shields.io/badge/Render-7d7d87?style=flat-square&logo=render&logoColor=white)
@@ -130,7 +94,6 @@ only be a guess wearing a percentage sign.</sub>
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions_%28CI%2FCD%29-7d7d87?style=flat-square&logo=githubactions&logoColor=white)
 
 **Tools**
-
 ![Git](https://img.shields.io/badge/Git%2FGitHub-7d7d87?style=flat-square&logo=github&logoColor=white)
 ![Razorpay](https://img.shields.io/badge/Razorpay_integration-3395ff?style=flat-square&logo=razorpay&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-9b4f96?style=flat-square&logo=jest&logoColor=white)
@@ -140,19 +103,17 @@ only be a guess wearing a percentage sign.</sub>
 
 ## `~/projects/Porejects`
 
+![Four projects left mid-progress](assets/graveyard.svg)
+
+Six standalone JavaScript/HTML/CSS apps built to practise DOM manipulation, state
+handling and API integration — all in one repo. Four of them I started and
+stopped, and they're still on the shelf on purpose: a portfolio that only shows
+finished things is telling you half of what happened.
+
 <details>
-<summary><b>Six practice apps, one repo — and four headstones</b></summary>
+<summary><b>The full folder</b></summary>
 
 <br>
-
-```
-       .-"""-.
-      /       \
-     |   >_    |
-     |         |
-     |_________|
-   ~~~~~~~~~~~~~~~
-```
 
 ```
 Porejects/
@@ -162,14 +123,10 @@ Porejects/
 ├── weather-app
 ├── quiz-app               †  left mid-progress
 └── project-management     †  left mid-progress
-
-†  started, stopped. Kept visible on purpose — a portfolio that only
-   shows finished things is telling you half of what happened.
 ```
 
-Six standalone JavaScript/HTML/CSS apps built to practise DOM manipulation, state
-handling and API integration. Grouped on purpose: none of these is PrintOK-scale,
-and pretending otherwise would flatten the one project that is.
+None of these is PrintOK-scale, and pretending otherwise would flatten the one
+project that is.
 
 **[github.com/Ayan-css/Porejects](https://github.com/Ayan-css/Porejects)**
 
@@ -209,7 +166,7 @@ $ mail ayan48311@gmail.com
 [![Email](https://img.shields.io/badge/Email-ayan48311%40gmail.com-141416?style=flat-square&logo=gmail&logoColor=e8a33d)](mailto:ayan48311@gmail.com)
 
 <!--
-  Once AyanOS is deployed, add the portfolio link here and in the badges above:
+  Once AyanOS is deployed, add the portfolio link here:
   [![portfolio](https://img.shields.io/badge/portfolio-AyanOS-e8a33d?style=flat-square&labelColor=141416)](https://YOUR-URL-HERE)
   Left commented out on purpose — a dead link on a profile is worse than no link.
 -->

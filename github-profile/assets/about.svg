@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="252" viewBox="0 0 880 252" role="img" aria-label="System info: full-stack developer, Mumbai Suburban India, BSc IT at AIKTC third semester, flagship PrintOK">
+  <style>
+    text { font-family: ui-monospace, "JetBrains Mono", "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+    .t { font-size: 12.5px; }
+    .k { fill: #62626c; font-size: 12.5px; }
+    .v { fill: #9a9aa4; font-size: 12.5px; }
+    .accent { fill: #e8a33d; }
+  </style>
+
+  <rect x="0.5" y="0.5" width="879" height="251" rx="10" fill="#0c0c0d" stroke="#2a2a2e"/>
+
+  <!-- the AyanOS badge, same one the portfolio's About module draws -->
+  <g transform="translate(42 44)">
+    <rect x="0" y="0" width="118" height="118" rx="12" fill="#141416" stroke="#2a2a2e"/>
+    <rect x="26" y="26" width="66" height="44" rx="6" fill="#0c0c0d" stroke="#3a3a40"/>
+    <text class="accent" x="59" y="55" text-anchor="middle" font-size="20">&gt;_</text>
+    <path d="M22 84h74" stroke="#2a2a2e"/>
+    <text x="59" y="104" text-anchor="middle" font-size="12" fill="#62626c">AyanOS</text>
+  </g>
+
+  <g transform="translate(206 0)">
+    <text class="t" x="0" y="46"><tspan class="accent">ayan</tspan><tspan fill="#62626c">@</tspan><tspan class="accent">ayanos</tspan></text>
+    <path d="M0 56h420" stroke="#2a2a2e"/>
+
+    <text class="k" x="0"  y="82">user</text>       <text class="v" x="110" y="82">ayan</text>
+    <text class="k" x="0"  y="104">role</text>      <text class="v" x="110" y="104">full-stack developer</text>
+    <text class="k" x="0"  y="126">location</text>  <text class="v" x="110" y="126">Mumbai Suburban, India</text>
+    <text class="k" x="0"  y="148">education</text> <text class="v" x="110" y="148">BSc IT · AIKTC · 3rd semester</text>
+    <text class="k" x="0"  y="170">gpa</text>       <text class="v" x="110" y="170">9.5 (sem 1) · 9.65 (sem 2)</text>
+    <text class="k" x="0"  y="192">shell</text>     <text class="v" x="110" y="192">node + typescript</text>
+    <text class="k" x="0"  y="214">flagship</text>  <text class="v" x="110" y="214">PrintOK.app</text>
+  </g>
+</svg>

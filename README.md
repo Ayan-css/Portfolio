@@ -128,14 +128,28 @@ percentages, "customers served" — ever appear in any module.
 
 ## GitHub profile README
 
-`github-profile/README.md` is a separate, drop-in file for the special
-`Ayan-css/Ayan-css` repository that renders on the GitHub profile page. Same
-theme, adapted to what GitHub Markdown actually allows — no CSS, so the terminal
-look comes from fenced code blocks and ASCII, and the colour legend from
-shields.io badges using the same hex values as `lib/tech.ts`.
+`github-profile/` is a drop-in folder for the special `Ayan-css/Ayan-css`
+repository that renders on the GitHub profile page. Copy its contents to that
+repo's root — README.md plus the `assets/` folder — and create the repo if it
+doesn't exist. Nothing in this project depends on it.
 
-Copy it to the root of a repo named exactly `Ayan-css`, and create that repo if
-it doesn't exist. Nothing in this project depends on it.
+GitHub's Markdown sanitiser strips `<style>` blocks and `style=` attributes, so
+CSS written into the `.md` silently disappears. The theme instead lives in four
+self-contained SVG cards under `github-profile/assets/`, which GitHub renders as
+images and which *do* support a full `<style>` block — including the header's
+blinking caret:
+
+| | |
+|---|---|
+| `header.svg` | the boot sequence, as a terminal window |
+| `about.svg` | the neofetch card from the About module |
+| `architecture.svg` | PrintOK's payment/print split |
+| `graveyard.svg` | four pixel headstones, generated from the same sprite map as `Headstone.tsx` |
+
+An SVG loaded as an image can't fetch anything, so the cards use no web fonts and
+no external references — they fall back through `ui-monospace` to whatever
+monospace the reader has. Each carries its own dark background, so it reads the
+same on GitHub's light and dark themes without needing `<picture>` variants.
 
 ## Deploying
 
