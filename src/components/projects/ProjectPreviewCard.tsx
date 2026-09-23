@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Github } from 'lucide-react'
 import type { Poreject } from '@/lib/types'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
+import { Gravestone } from './Gravestone'
 
 /** Inline preview for one practice app. Deliberately small — these aren't PrintOK. */
 export function ProjectPreviewCard({ project }: { project: Poreject }) {
@@ -54,6 +55,9 @@ export function ProjectPreviewCard({ project }: { project: Poreject }) {
 }
 
 function Thumbnail({ project }: { project: Poreject }) {
+  // A project that was stopped gets a headstone, not a product shot.
+  if (project.progress === 'mid-progress') return <Gravestone file={project.file} />
+
   if (project.screenshot) {
     return (
       <img
