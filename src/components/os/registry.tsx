@@ -4,6 +4,7 @@ import { Timeline } from '@/components/sections/Timeline'
 import { Projects } from '@/components/sections/Projects'
 import { PrintOKApp } from '@/components/projects/PrintOKApp'
 import { PorojectsFolder } from '@/components/projects/PorojectsFolder'
+import { Contact } from '@/components/sections/Contact'
 import type { WindowId } from '@/lib/windowMeta'
 
 /**
@@ -17,9 +18,5 @@ export const WINDOW_CONTENT: Record<WindowId, () => React.ReactElement> = {
   timeline: Timeline,
   printok: PrintOKApp,
   porejects: PorojectsFolder,
-  contact: () => (
-    <div className="chrome text-os-faint grid h-full place-items-center p-8 text-[12px]">
-      contact — module not mounted yet
-    </div>
-  ),
+  contact: Contact,
 }

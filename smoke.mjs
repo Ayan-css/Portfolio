@@ -49,6 +49,7 @@ try {
     timeline: [/Anjuman-I-Islam/, /9\.65/, /Rise Club/],
     printok: [/PrintOK/, /pre-launch/, /printok\.vercel\.app/],
     porejects: [/expense-tracker/, /weather-app/, /project-management/],
+    contact: [/send_message/, /github\.com\/Ayan-css/, /ayan48311@gmail\.com/],
   }
 
   for (const [id, patterns] of Object.entries(expectations)) {
@@ -61,7 +62,6 @@ try {
   // The honesty constraint, enforced: no invented traction anywhere in the UI.
   check('no fabricated metrics in any module', () => {
     const all = Object.keys(WINDOW_CONTENT)
-      .filter((id) => id !== 'contact')
       .map(renderWindow)
       .join(' ')
     for (const banned of [/\d+\s*(k|K)?\+?\s*users/, /\d+%\s*(proficien|skill)/i, /customers served/i]) {
