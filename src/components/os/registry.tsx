@@ -1,17 +1,20 @@
+import { About } from '@/components/sections/About'
+import { TechStack } from '@/components/sections/TechStack'
+import { Timeline } from '@/components/sections/Timeline'
 import type { WindowId } from '@/lib/windowMeta'
 
 /**
- * Maps a window id to its content. Sections stay dumb presentational
- * components — anything that needs to open another window calls useWindows().
+ * Maps a window id to its content. Sections stay presentational — anything
+ * that needs to open another window calls useWindows() for itself.
  */
 export const WINDOW_CONTENT: Record<WindowId, () => React.ReactElement> = {
-  about: () => <Pending name="about.md" />,
-  stack: () => <Pending name="stack" />,
+  about: About,
+  stack: TechStack,
+  timeline: Timeline,
   projects: () => <Pending name="~/projects" />,
-  timeline: () => <Pending name="timeline.log" />,
-  contact: () => <Pending name="contact" />,
   printok: () => <Pending name="PrintOK.app" />,
   porejects: () => <Pending name="Porejects/" />,
+  contact: () => <Pending name="contact" />,
 }
 
 function Pending({ name }: { name: string }) {

@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { WindowManagerProvider } from '@/hooks/useWindowManager'
+import { SkillFilterProvider } from '@/hooks/useSkillFilter'
 import { useShortcuts } from '@/hooks/useShortcuts'
 import { useIsMobile } from '@/hooks/useMediaQuery'
 import { BootSequence } from '@/components/os/BootSequence'
@@ -24,7 +25,9 @@ export default function App() {
   return (
     <WindowManagerProvider>
       <AnimatePresence>{booting && <BootSequence onDone={finishBoot} />}</AnimatePresence>
-      <Shell />
+      <SkillFilterProvider>
+        <Shell />
+      </SkillFilterProvider>
     </WindowManagerProvider>
   )
 }
