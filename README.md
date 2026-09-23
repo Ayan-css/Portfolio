@@ -126,6 +126,17 @@ to `profile.json` and the Contact module if you want it surfaced.
 `npm run check` fails the build if invented metrics — user counts, proficiency
 percentages, "customers served" — ever appear in any module.
 
+## GitHub profile README
+
+`github-profile/README.md` is a separate, drop-in file for the special
+`Ayan-css/Ayan-css` repository that renders on the GitHub profile page. Same
+theme, adapted to what GitHub Markdown actually allows — no CSS, so the terminal
+look comes from fenced code blocks and ASCII, and the colour legend from
+shields.io badges using the same hex values as `lib/tech.ts`.
+
+Copy it to the root of a repo named exactly `Ayan-css`, and create that repo if
+it doesn't exist. Nothing in this project depends on it.
+
 ## Deploying
 
 It's a static build; `npm run build` emits `dist/`.
