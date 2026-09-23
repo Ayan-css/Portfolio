@@ -166,7 +166,7 @@
         ],
         "repo": "",
         "screenshot": "",
-        "progress": ""
+        "progress": "mid-progress"
       },
       {
         "id": "ecommerce-cart",
@@ -185,7 +185,7 @@
         ],
         "repo": "",
         "screenshot": "",
-        "progress": ""
+        "progress": "mid-progress"
       },
       {
         "id": "todo-app",
@@ -243,7 +243,7 @@
         ],
         "repo": "",
         "screenshot": "",
-        "progress": ""
+        "progress": "mid-progress"
       },
       {
         "id": "project-management",
@@ -262,7 +262,7 @@
         ],
         "repo": "",
         "screenshot": "",
-        "progress": ""
+        "progress": "mid-progress"
       }
     ],
     "progressNote": "Set progress to \"mid-progress\" on anything you started and stopped. It gets a headstone and drops in like one; an empty value claims nothing."
