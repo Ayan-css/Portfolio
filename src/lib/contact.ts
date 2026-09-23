@@ -28,10 +28,15 @@ export async function sendMessage(payload: Message): Promise<void> {
     SERVICE_ID,
     TEMPLATE_ID,
     {
+      // EmailJS's default template uses {{name}} and {{time}}; a custom subject
+      // line usually uses {{from_name}}. Sending both names costs nothing and
+      // means the template works whichever one it was written against.
+      name: payload.name,
       from_name: payload.name,
+      email: payload.email,
       reply_to: payload.email,
       message: payload.message,
-      to_email: profile.email,
+      time: new Date().toLocaleString(),
     },
     { publicKey: PUBLIC_KEY },
   )
